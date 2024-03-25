@@ -39,7 +39,7 @@ section h3 {
 
 table {
 	margin: auto;
-	width: 50%;
+	width: 75%;
 	height: 50%;
 	border: 2px solid black;
 }
@@ -50,7 +50,7 @@ tr {
 
 th {
 	border: 1px solid black;
-	padding: 9px 30px 9px 30px;
+	padding: 10px 0px 10px 0px;
 	background-color: #eee;
 }
 
@@ -69,8 +69,7 @@ td {
 	height: 90%;
 	padding: 2px 10px 2px 10px;
 	font-size: 1em;
-	background-color: #555555;
-	color: white;
+	background-color: #eee;
 }
 
 select {
@@ -122,6 +121,9 @@ select {
 	ResultSet rs = null;
 	String sql = "";
 	int code=0;
+	String sc = "";
+	String pname="";
+	String scode=request.getParameter("scode");
 	try{
 		sql = "select max(productcode) from product0325";
 		pstmt = conn.prepareStatement(sql);
@@ -130,6 +132,24 @@ select {
 			code=rs.getInt(1)+1;
 		}else{
 			code=1;
+		}
+		sql = "select storename from store0325 where storecode=?";
+		pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, scode);
+		rs = pstmt.executeQuery();
+		pname = request.getParameter("name1");
+		if(rs.next()){
+			sc=rs.getString(1);
+		}else if(scode==null){
+			sc="";
+			pname="";
+			scode="";
+		}else{
+			%><script>
+			alert("등록되어 있지 않는 매장코드 입니다.");
+			</script>
+			<%
+			scode="";
 		}
 	}catch(Exception e){
 		System.out.println("테이블 읽기 오류");
@@ -142,20 +162,18 @@ select {
 			
 			if (frm.name1.value == "") {
 				frm.name1.focus();
-				alert("강사명이 입력되지 않았습니다.");
+				alert("상품명이 입력되지 않았습니다.");
 				return false;
 			}
-			if (frm.major.value == "") {
-				frm.major.focus();
-				alert("전공이 입력되지 않았습니다.");
-				return false;
-			}
-			if (frm.field.value == "") {
-				frm.field.focus();
-				alert("세부전공이 입력되지 않았습니다.");
+			if (frm.scode.value == "") {
+				frm.scode.focus();
+				alert("매장코드가 입력되지 않았습니다.");
 				return false;
 			}
 			
+			frm.action = "proProcess.jsp";
+		}
+		function onchanesubmit() {
 			document.frm.submit();
 		}
 	</script>
@@ -166,7 +184,7 @@ select {
 		<%@ include file="nav.jsp"%>
 	</nav>
 	<section>
-		<form action="proProcess.jsp" method="post" name="frm"
+		<form action="addPro.jsp" method="post" name="frm"
 			onSubmit="return checkForm()">
 			<h3>상품 등록 화면</h3>
 			<table>
@@ -176,15 +194,15 @@ select {
 				</tr>
 				<tr>
 					<th>상 품 명</th>
-					<td><input type="text" name="name1" class="name1"></td>
+					<td><input type="text" name="name1" class="name1" value="<%=pname%>"></td>
 				</tr>
 				<tr>
 					<th>매장코드</th>
-					<td><input type="text" name="scode" class="scode"></td>
+					<td><input type="text" name="scode" class="scode" onchange="onchanesubmit()" value="<%=scode%>"></td>
 				</tr>
 				<tr>
 					<th>매 장 명</th>
-					<td><input type="text" name="store" class="store"></td>
+					<td><input type="text" name="store" class="store" value="<%=sc%>"></td>
 				</tr>
 				<tr>
 					<th>단가</th>
@@ -195,7 +213,7 @@ select {
 					<td><input type="text" name="qty" class="qty"></td>
 				</tr>
 				<tr>
-					<td colspan="2" class="bt1"><input type="button" value="등록"
+					<td colspan="2" class="bt1"><input type="submit" value="등록"
 						onclick="checkForm()"> <input type="button" value="취소"
 						onclick="location.href='index.jsp'"></td>
 				</tr>

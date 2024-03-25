@@ -65,9 +65,9 @@ td a {
 
 input {
 	position: relative;
-	left: 45%;
+	left: 43.5%;
 	margin-top: 15px;
-	padding: 2px 75px 2px 75px;
+	padding: 10px 50px 10px 50px;
 	font-size: 1em;
 	background-color: #555555;
 	color: white;
@@ -89,47 +89,55 @@ div p {
 		<%@ include file="nav.jsp"%>
 	</nav>
 	<div>
-		<h2>강사 리스트</h2>
+		<h2>상품 정보 목록</h2>
 		<table>
 			<tr>
-				<th>강사코드</th>
-				<th>강사명</th>
-				<th>전공</th>
-				<th>세부전공</th>
+				<th>no</th>
+				<th>상품코드</th>
+				<th>상품명</th>
+				<th>매장코드</th>
+				<th>매장명</th>
+				<th>단가</th>
+				<th>재고수량</th>
 				<th>관리</th>
 			</tr>
 			<%
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
-			String sql = "select * from LECTURER0321";
+			String sql = "select a.productcode, a.productname, a.storecode, b.storename, to_char(a.unitprice,'999,999,999'), a.stockqty from product0325 a, store0325 b where b.storecode=a.storecode";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			int ct = 0;
 			while (rs.next()) {
 				ct++;
-				String id = rs.getString(1);
+				String pcode = rs.getString(1);
 				String na1 = rs.getString(2);
-				String major = rs.getString(3);
-				String field = rs.getString(4);
+				String scode = rs.getString(3);
+				String store = rs.getString(4);
+				String price = rs.getString(5);
+				String qty = rs.getString(6);
 			%>
 			<tr>
-				<td><%=id%></td>
+				<td><%=ct%></td>
+				<td bgcolor="#aaa"><a href="proUpdate.jsp?pcode=<%=pcode%>"><%=pcode%></a></td>
 				<td><%=na1%></td>
-				<td><%=major%></td>
-				<td><%=field%></td>
-				<td class="l1"><a href="teUpdate.jsp?id=<%=id%>">수정</a>/<a
-					href="teDelete.jsp?id=<%=id%>"
+				<td><%=scode%></td>
+				<td><%=store%></td>
+				<td><%=price%></td>
+				<td><%=qty%></td>
+				<td class="l1"><a
+					href="proDelete.jsp?pcode=<%=pcode%>"
 					onclick="if(!confirm('정말로 삭제하시겠습니까?')) return false;">삭제</a></td>
 			</tr>
 			<%
 			}
 			%>
 		</table>
-		<input type="button" value="작성"
-			onclick="location.href='addTe.jsp'">
+		<input type="button" value="상품 정보 추가"
+			onclick="location.href='addPro.jsp'">
 		<p>
 			총
-			<%=ct%>명의 강사가 있습니다.
+			<%=ct%>개의 상품정보가 있습니다.
 		</p>
 	</div>
 	<footer>

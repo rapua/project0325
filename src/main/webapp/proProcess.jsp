@@ -9,23 +9,25 @@
 <body>
 	<%@ include file="dbconn.jsp"%>
 	<%
-	String id = request.getParameter("id");
+	String pcode = request.getParameter("pcode");
 	String na1 = request.getParameter("name1");
-	String major = request.getParameter("major");
-	String field = request.getParameter("field");
+	String scode = request.getParameter("scode");
+	String price = request.getParameter("price");
+	String qty = request.getParameter("qty");
 	
 	PreparedStatement pstmt = null;
-	String sql = "insert into LECTURER0321 values(?,?,?,?)";
+	String sql = "insert into product0325 values(?,?,?,?,?)";
 	pstmt = conn.prepareStatement(sql);
-	pstmt.setString(1, id);
+	pstmt.setString(1, pcode);
 	pstmt.setString(2, na1);
-	pstmt.setString(3, major);
-	pstmt.setString(4, field);
+	pstmt.setString(3, scode);
+	pstmt.setString(4, price);
+	pstmt.setString(5, qty);
 	pstmt.executeUpdate();
 	%>
 	<script>
-		alert("강사 저장 완료");
-		location.href="teList.jsp"
+		alert("상품 테이블 등록 성공");
+		location.href="proList.jsp"
 	</script>
 </body>
 </html>
