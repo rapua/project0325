@@ -82,29 +82,38 @@ select {
 	line-height: 2em;
 }
 
-.ju1 {
+.pcode {
 	width: 70%;
 	line-height: 2em;
 	font-size: 1em;
 }
 
 .name1 {
+	width: 30%;
+	line-height: 2em;
+	font-size: 1em;
+}
+.scode {
+	width: 30%;
+	line-height: 2em;
+	font-size: 1em;
+}
+.store {
+	width: 30%;
+	line-height: 2em;
+	font-size: 1em;
+}
+.price {
+	width: 70%;
+	line-height: 2em;
+	font-size: 1em;
+}
+.qty {
 	width: 70%;
 	line-height: 2em;
 	font-size: 1em;
 }
 
-.addr {
-	width: 70%;
-	line-height: 2em;
-	font-size: 1em;
-}
-
-.phone {
-	width: 70%;
-	line-height: 2em;
-	font-size: 1em;
-}
 </style>
 </head>
 <%@ include file="dbconn.jsp" %>
@@ -112,15 +121,15 @@ select {
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
 	String sql = "";
-	int next_id=0;
+	int code=0;
 	try{
-		sql = "select max(idx) from LECTURER0321";
+		sql = "select max(productcode) from product0325";
 		pstmt = conn.prepareStatement(sql);
 		rs = pstmt.executeQuery();
 		if(rs.next()){
-			next_id=rs.getInt(1)+1;
+			code=rs.getInt(1)+1;
 		}else{
-			next_id=1;
+			code=1;
 		}
 	}catch(Exception e){
 		System.out.println("테이블 읽기 오류");
@@ -157,30 +166,38 @@ select {
 		<%@ include file="nav.jsp"%>
 	</nav>
 	<section>
-		<form action="teProcess.jsp" method="post" name="frm"
+		<form action="proProcess.jsp" method="post" name="frm"
 			onSubmit="return checkForm()">
-			<h3>강사 추가</h3>
+			<h3>상품 등록 화면</h3>
 			<table>
 				<tr>
-					<th>강사 ID</th>
-					<td><input type="text" name="id" class="ju1" value="<%=next_id%>">자동증가(마지막번호+1)</td>
+					<th>상품 코드(자동생성)</th>
+					<td><input type="text" name="pcode" class="pcode" value="<%=code%>">마지막번호+1</td>
 				</tr>
 				<tr>
-					<th>강 사 명</th>
+					<th>상 품 명</th>
 					<td><input type="text" name="name1" class="name1"></td>
 				</tr>
 				<tr>
-					<th>전 공</th>
-					<td><input type="text" name="major" class="addr"></td>
+					<th>매장코드</th>
+					<td><input type="text" name="scode" class="scode"></td>
 				</tr>
 				<tr>
-					<th>세부 전공</th>
-					<td><input type="text" name="field" class="phone"></td>
+					<th>매 장 명</th>
+					<td><input type="text" name="store" class="store"></td>
 				</tr>
 				<tr>
-					<td colspan="2" class="bt1"><input type="button" value="목록"
-						onclick="location.href='teList.jsp'"> <input type="button" value="등록"
-						onclick="checkForm()"></td>
+					<th>단가</th>
+					<td><input type="text" name="price" class="price"></td>
+				</tr>
+				<tr>
+					<th>재고수량</th>
+					<td><input type="text" name="qty" class="qty"></td>
+				</tr>
+				<tr>
+					<td colspan="2" class="bt1"><input type="button" value="등록"
+						onclick="checkForm()"> <input type="button" value="취소"
+						onclick="location.href='index.jsp'"></td>
 				</tr>
 			</table>
 		</form>

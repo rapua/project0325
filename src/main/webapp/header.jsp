@@ -38,7 +38,7 @@ nav ul {
 
 nav li {
 	width: 100%;
-	padding-bottom: 30px;
+	padding-bottom: 20px;
 	padding-left: 10px;
 	text-align: center;
 }
@@ -66,7 +66,7 @@ footer {
 </head>
 <body>
 	<header>
-		<h3>수강신청 도우미 사이트</h3>
+		<h3>매장 입출고 관리 시스템ver 1.0</h3>
 	</header>
 </body>
 </html>

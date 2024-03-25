@@ -11,14 +11,17 @@
 <body>
 	<nav>
 		<ul>
-			<li><a href="addSt.jsp">학사 정보 추가</a><li>
-			<li><a href="addSub.jsp">교과목 추가</a><li>
-			<li><a href="addTe.jsp">강사 추가</a><li>
-			<li><a href="productList.jsp">수강정보 추가</a><li>
-			<li><a href="stList.jsp">학사 정보 조회</a><li>
-			<li><a href="subList.jsp">교과목 조회</a><li>
-			<li><a href="teList.jsp">강사 조회</a><li>
-			<li><a href="sellList1.jsp">수강신청 조회</a><li>
+			<li><a href="addPro.jsp">상품 정보 등록</a><li>
+			<li><a href="addSub.jsp">매장 정보 등록</a><li>
+			<li><a href="addTe.jsp">입출고 내역 등록</a><li>
+			<li><a href="productList.jsp">상품 정보</a><li>
+			<li><a href="stList.jsp">매장 정보</a><li>
+			<li><a href="subList.jsp">입출고 정보</a><li>
+			<li><a href="teList.jsp">입출고 정보(입,출고 분리)</a><li>
+			<li><a href="sellList1.jsp">상품/매장 정보</a><li>
+			<li><a href="sellList1.jsp">상품/매장(금액) 정보</a><li>
+			<li><a href="sellList1.jsp">출고 내역(금액)정보</a><li>
+			<li><a href="sellList1.jsp">입고 내역(금액)정보</a><li>
 			<li><a href="index.jsp">홈으로</a><li>
 		</ul>
 	</nav>
