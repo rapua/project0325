@@ -12,7 +12,7 @@
 	<nav>
 		<ul>
 			<li><a href="addPro.jsp">상품 정보 등록</a><li>
-			<li><a href="addSub.jsp">매장 정보 등록</a><li>
+			<li><a href="addStore.jsp">매장 정보 등록</a><li>
 			<li><a href="addTe.jsp">입출고 내역 등록</a><li>
 			<li><a href="productList.jsp">상품 정보</a><li>
 			<li><a href="stList.jsp">매장 정보</a><li>
