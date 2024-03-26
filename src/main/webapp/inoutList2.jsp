@@ -95,7 +95,8 @@ input {
 				<th>상품코드</th>
 				<th>상 품 명</th>
 				<th>입.출고 구분</th>
-				<th>수량</th>
+				<th>입고수량</th>
+				<th>출고수량</th>
 			</tr>
 			<%
 			PreparedStatement pstmt = null;
@@ -113,6 +114,14 @@ input {
 				String pname = rs.getString(5);
 				String gubun = rs.getString(6);
 				String qty = rs.getString(7);
+				String in1, out1;
+				if(gubun.equals("1")){
+					in1 = qty;
+					out1 = "";
+				}else{
+					out1 = qty;
+					in1 = "";
+				}
 			%>
 			<tr>
 				<td><%=ct%></td>
@@ -122,7 +131,8 @@ input {
 				<td><%=pcode%></td>
 				<td><%=pname%></td>
 				<td><%=gubun.equals("1")?"입고":gubun.equals("2")?"출고":""%></td>
-				<td><%=qty%></td>
+				<td><%=in1%></td>
+				<td><%=out1%></td>
 			</tr>
 			<%
 			}

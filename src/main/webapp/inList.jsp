@@ -85,7 +85,7 @@ input {
 		<%@ include file="nav.jsp"%>
 	</nav>
 	<div>
-		<h2>입/출고 정보 목록</h2>
+		<h2>입고 정보(금액) 목록</h2>
 		<table>
 			<tr>
 				<th>no</th>
@@ -94,13 +94,14 @@ input {
 				<th>매 장 명</th>
 				<th>상품코드</th>
 				<th>상 품 명</th>
-				<th>입.출고 구분</th>
-				<th>수량</th>
+				<th>입고수량</th>
+				<th>단가</th>
+				<th>입고금액</th>
 			</tr>
 			<%
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
-			String sql = "select to_char(a.inoutdate, 'yyyy-mm-dd'), a.storecode, b.storename, a.productcode, c.productname, a.gubun, a.saleqty from inout0325 a, store0325 b, product0325 c where b.storecode = a.storecode and c.productcode = a.productcode order by a.inoutdate, a.storecode, a.gubun";
+			String sql = "select to_char(a.inoutdate, 'yyy-mm-dd'), a.storecode, b.storename, a.productcode, c.productname, a.gubun, a.saleqty, c.unitprice from inout0325 a, store0325 b, product0325 c where b.storecode = a.storecode and c.productcode = a.productcode and a.gubun<2 order by a.inoutdate, a.storecode";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			int ct = 0;
@@ -113,6 +114,21 @@ input {
 				String pname = rs.getString(5);
 				String gubun = rs.getString(6);
 				String qty = rs.getString(7);
+				int price = rs.getInt(8);
+				String price2 = rs.getString(8);
+				String price3 = price2.replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
+				int q1=Integer.parseInt(qty);
+				int total1 = price * q1;
+				String total2 = total1+"";
+				String total3 = total2.replaceAll("\\B(?=(\\d{3})+(?!\\d))", ",");
+				String in1, out1;
+				if(gubun.equals("1")){
+					in1 = qty;
+					out1 = "";
+				}else{
+					out1 = qty;
+					in1 = "";
+				}
 			%>
 			<tr>
 				<td><%=ct%></td>
@@ -121,8 +137,9 @@ input {
 				<td><%=store%></td>
 				<td><%=pcode%></td>
 				<td><%=pname%></td>
-				<td><%=gubun.equals("1")?"입고":gubun.equals("2")?"출고":""%></td>
-				<td><%=qty%></td>
+				<td><%=in1%></td>
+				<td><%=price3%></td>
+				<td><%=total3%></td>
 			</tr>
 			<%
 			}
