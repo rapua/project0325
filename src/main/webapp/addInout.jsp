@@ -160,7 +160,7 @@ try {
 		stockp = "0";
 	} else {
 %><script>
-				alert("등록되어 있지 않는 상품코드 입니다.");
+				alert("등록되어 있지 않는 코드 입니다.");
 			</script>
 <%
 pcode = "";
