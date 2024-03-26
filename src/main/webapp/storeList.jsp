@@ -56,7 +56,6 @@ th {
 td {
 	border: 1px solid black;
 	text-align: center;
-	padding: 10px;
 	font-weight: 600;
 }
 
@@ -66,9 +65,9 @@ td a {
 
 input {
 	position: relative;
-	left: 44%;
+	left: 43.5%;
 	margin-top: 15px;
-	padding: 2px 75px 2px 75px;
+	padding: 10px 50px 10px 50px;
 	font-size: 1em;
 	background-color: #555555;
 	color: white;
@@ -90,61 +89,52 @@ div p {
 		<%@ include file="nav.jsp"%>
 	</nav>
 	<div>
-		<h2>교과목 목록</h2>
+		<h2>매장 정보 목록</h2>
 		<table>
 			<tr>
 				<th>no</th>
-				<th>강사코드</th>
-				<th>담당강사</th>
-				<th>과목코드</th>
-				<th>과목명</th>
-				<th>학점</th>
-				<th>요일</th>
-				<th>시작시간</th>
-				<th>종료시간</th>
+				<th>매장코드</th>
+				<th>매 장 명</th>
+				<th>상품코드</th>
+				<th>상 품 명</th>
+				<th>상품수량</th>
 				<th>관리</th>
 			</tr>
 			<%
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
-			String sql = "select a.id, a.subject_name, a.credit, a.lecturer, a.week, a.start_hour, a.end_hour, b.idx from sub0321 a, lecturer0321 b where b.idx=a.lecturer order by b.idx, a.id";
+			String sql = "select a.storecode, a.storename, a.productcode, a.qty, b.productname from store0325 a, product0325 b where b.productcode = a.productcode";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			int ct = 0;
 			while (rs.next()) {
 				ct++;
-				String id = rs.getString(1);
-				String na1 = rs.getString(2);
-				String credit = rs.getString(3);
-				String lec = rs.getString(4);
-				String week = rs.getString(5);
-				String starth = rs.getString(6);
-				String endh = rs.getString(7);
-				String idx = rs.getString(8);
+				String scode = rs.getString(1);
+				String store = rs.getString(2);
+				String pcode = rs.getString(3);
+				String qty = rs.getString(4);
+				String pname = rs.getString(5);
 			%>
 			<tr>
 				<td><%=ct%></td>
-				<td><%=idx%></td>
-				<td><%=lec.equals("1")?"김교수":lec.equals("2")?"이교수":lec.equals("3")?"박교수":lec.equals("4")?"우교수":lec.equals("5")?"최교수":lec.equals("6")?"강교수":lec.equals("7")?"황교수":""%></td>
-				<td><%=id%></td>
-				<td><%=na1%></td>
-				<td><%=credit%></td>
-				<td><%=week.equals("1")?"월":week.equals("2")?"화":week.equals("3")?"수":week.equals("4")?"목":week.equals("5")?"금":""%></td>
-				<td><%=starth%></td>
-				<td><%=endh%></td>
-				<td class="l1"><a href="subUpdate.jsp?id=<%=id%>">수정</a>/<a
-					href="subDelete.jsp?id=<%=id%>"
+				<td bgcolor="#aaa"><a href="storeUpdate.jsp?scode=<%=scode%>"><%=scode%></a></td>
+				<td><%=store%></td>
+				<td><%=pcode%></td>
+				<td><%=pname%></td>
+				<td><%=qty%></td>
+				<td class="l1"><a
+					href="storeDelete.jsp?scode=<%=scode%>"
 					onclick="if(!confirm('정말로 삭제하시겠습니까?')) return false;">삭제</a></td>
 			</tr>
 			<%
 			}
 			%>
 		</table>
-		<input type="button" value="작성"
-			onclick="location.href='addSub.jsp'">
+		<input type="button" value="매장 정보 추가"
+			onclick="location.href='addStore.jsp'">
 		<p>
 			총
-			<%=ct%>개의 교과목이 있습니다.
+			<%=ct%>개의 매장정보가 있습니다.
 		</p>
 	</div>
 	<footer>

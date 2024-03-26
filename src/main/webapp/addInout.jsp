@@ -179,11 +179,6 @@ System.out.println("SQL:" + e.getMessage());
 	<script type="text/javascript">
 		function checkForm() {
 
-			if (frm.name1.value == "") {
-				frm.name1.focus();
-				alert("매장명이 입력되지 않았습니다.");
-				return false;
-			}
 			if (frm.pcode.value == "") {
 				frm.pcode.focus();
 				alert("상품코드가 입력되지 않았습니다.");

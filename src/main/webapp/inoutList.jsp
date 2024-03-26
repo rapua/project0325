@@ -28,6 +28,7 @@ div {
 }
 div h2 {
 	text-align: center;
+	padding-top: 1%;
 }
 
 h1 {
@@ -56,7 +57,6 @@ th {
 td {
 	border: 1px solid black;
 	text-align: center;
-	padding: 10px;
 	font-weight: 600;
 }
 
@@ -66,16 +66,12 @@ td a {
 
 input {
 	position: relative;
-	left: 44%;
+	left: 43.5%;
 	margin-top: 15px;
-	padding: 2px 50px 2px 50px;
+	padding: 10px 50px 10px 50px;
 	font-size: 1em;
-	background-color: #eee;
-}
-div p {
-	position: absolute;
-	top: 2%;
-	left: 10%;
+	background-color: #555555;
+	color: white;
 }
 </style>
 </head>
@@ -89,57 +85,51 @@ div p {
 		<%@ include file="nav.jsp"%>
 	</nav>
 	<div>
-		<h2>학사정보 목록</h2>
+		<h2>입/출고 정보 목록</h2>
 		<table>
 			<tr>
-				<th>학번</th>
-				<th>성명</th>
-				<th>학과</th>
-				<th>학년</th>
-				<th>주소</th>
-				<th>연락처</th>
-				<th>취미</th>
-				<th>관리</th>
+				<th>no</th>
+				<th>입.출고일자</th>
+				<th>매장코드</th>
+				<th>매 장 명</th>
+				<th>상품코드</th>
+				<th>상 품 명</th>
+				<th>입.출고 구분</th>
+				<th>수량</th>
 			</tr>
 			<%
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
-			String sql = "select studno,name,dept,position,address,phone,hobby from stud0321";
+			String sql = "select to_char(a.inoutdate, 'yyyy-mm-dd'), a.storecode, b.storename, a.productcode, c.productname, a.gubun, a.saleqty from inout0325 a, store0325 b, product0325 c where b.storecode = a.storecode and c.productcode = a.productcode order by a.inoutdate, a.storecode, a.gubun";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			int ct = 0;
 			while (rs.next()) {
 				ct++;
-				String sn = rs.getString(1);
-				String na1 = rs.getString(2);
-				String dept = rs.getString(3);
-				String posi = rs.getString(4);
-				String addr = rs.getString(5);
-				String phone = rs.getString(6);
-				String hobby = rs.getString(7);
+				String iodate = rs.getString(1);
+				String scode = rs.getString(2);
+				String store = rs.getString(3);
+				String pcode = rs.getString(4);
+				String pname = rs.getString(5);
+				String gubun = rs.getString(6);
+				String qty = rs.getString(7);
 			%>
 			<tr>
-				<td><%=sn%></td>
-				<td><%=na1%></td>
-				<td><%=dept%></td>
-				<td><%=posi%></td>
-				<td><%=addr%></td>
-				<td><%=phone%></td>
-				<td><%=hobby%></td>
-				<td class="l1"><a href="stUpdate.jsp?sn=<%=sn%>">수정</a>/<a
-					href="stDelete.jsp?sn=<%=sn%>"
-					onclick="if(!confirm('정말로 삭제하시겠습니까?')) return false;">삭제</a></td>
+				<td><%=ct%></td>
+				<td><%=iodate%></td>
+				<td><%=scode%></td>
+				<td><%=store%></td>
+				<td><%=pcode%></td>
+				<td><%=pname%></td>
+				<td><%=gubun%></td>
+				<td><%=qty%></td>
 			</tr>
 			<%
 			}
 			%>
 		</table>
-		<input type="button" value="학사정보 추가"
-			onclick="location.href='addSt.jsp'">
-		<p>
-			총
-			<%=ct%>명의 학사정보가 있습니다.
-		</p>
+		<input type="button" value="입출고 정보 추가"
+			onclick="location.href='addInout.jsp'">
 	</div>
 	<footer>
 		<%@ include file="footer.jsp"%>
